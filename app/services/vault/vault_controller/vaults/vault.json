@@ -1,0 +1,31 @@
+{
+  "vault_name": "vault.json",
+  "wallets": [
+    {
+      "wallet_name": "Agua",
+      "contents":{
+        "wallet_address": "Wallet address",
+        "wallet_key": "Wallet Key lol nice try hackers",
+        "wallet_passphrase": "Pass.Phrase"
+      }
+    }
+  ],
+  "passwords": [
+    {
+      "password_name": "Agua",
+      "contents": {
+        "username": "username",
+        "password": "password",
+        "url": "password.com"
+      }
+    }
+  ],
+  "notes": [
+    {
+      "note_name": "Agua",
+      "contents": {
+        "text": "Toma mas agua gato"
+      }
+    }
+  ]
+}
