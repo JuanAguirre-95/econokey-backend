@@ -2,17 +2,13 @@
 
 
 class BaseConfig:
-    JWT_SECRET_KEY: str = "Development"
+    SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 
 
 class DevelopmentConfig(BaseConfig):
     """Development Config"""
-    PARAMETER = 1
-
-
-class ProductionConfig(BaseConfig):
-    """Production Config"""
-    pass
+    JWT_SECRET_KEY: str = "development"
+    SQLALCHEMY_DATABASE_URI: str = "sqlite:///database/econokey.db"
 
 
 def get_config(scope: str):
