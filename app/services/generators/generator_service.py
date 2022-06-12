@@ -22,14 +22,3 @@ class GeneratorService:
     def get_generators(self):
         return factory.get_funcs()
 
-
-gen_params = {
-    "generator_type": "passphrase",
-    "parameters": {
-        "word_count": 5,
-        "delimiter": "%"
-    }
-}
-gens = GeneratorService([".password", ".passphrase", ".wallet_btc"])
-generator = gens.create_generator(gen_params)
-print(generator.generate())
