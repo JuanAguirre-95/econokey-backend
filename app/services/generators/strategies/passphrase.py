@@ -20,9 +20,10 @@ class PassphraseGenerator:
 
     def __init__(self, *args, **kwargs):
         """Instantiate the generation with the required parameters"""
-        params: dict = kwargs.get("parameters")
-        for key, value in params.items():
-            self.__setattr__(key, value)
+        params: dict = kwargs.get("parameters", None)
+        if params:
+            for key, value in params.items():
+                self.__setattr__(key, value)
 
     def capitalization(self, capitalization: str, passphrase: list[str]) -> list[str]:
         """
@@ -53,6 +54,15 @@ class PassphraseGenerator:
         if self.delimiter == "random":
             self.delimiter = random.choice(self.delimiter_pool)
         return {self.generator_type: self.delimiter.join(choices)}
+
+    def get_defaults(self) -> dict:
+
+        return {
+            "word_count": self.word_count,
+            "delimiter": self.delimiter,
+            "capitalization_type": self.capitalization_type,
+
+        }
 
 
 def register() -> None:
