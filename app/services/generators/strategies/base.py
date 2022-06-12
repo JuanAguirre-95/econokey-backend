@@ -11,3 +11,8 @@ class BaseGenerator(Protocol):
         :param kwargs:
         :return: Any
         """
+    def get_defaults(self) -> dict:
+        """
+        Returns a dict containing default parameters for the class
+        :return:
+        """

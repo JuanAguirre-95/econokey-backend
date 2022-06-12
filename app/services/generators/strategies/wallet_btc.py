@@ -8,13 +8,14 @@ from app.services.generators import factory
 class WalletBTCGenerator:
     """BTC Wallet generation"""
 
-    generator_type: str
+    generator_type: str = "wallet_btc"
 
     def __init__(self, *args, **kwargs):
         """Instantiate the generation with the required parameters"""
-        params: dict = kwargs.get("parameters")
-        for key, value in params.items():
-            self.__setattr__(key, value)
+        params: dict = kwargs.get("parameters", None)
+        if params:
+            for key, value in params.items():
+                self.__setattr__(key, value)
 
     def generate(self, *args, **kwargs) -> Any:
         """
@@ -24,6 +25,9 @@ class WalletBTCGenerator:
         :return:
         """
         return "ALKSDNSDFG9UIZXKZOXCUIZB"
+
+    def get_defaults(self) -> dict:
+        return {}
 
 
 def register() -> None:
