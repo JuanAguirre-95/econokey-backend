@@ -1,60 +1,51 @@
-import dataclasses
 import json
 import os
 
 from cryptography.fernet import Fernet
 
+from app.models.vault import Vault
 from app.services.vault.vault_controller.base_vault import BaseVault
-from security import derive_key
+from .security import derive_key
+
+vault_dir = os.path.join(os.getcwd(), "services", "vault", "vault_controller", "vaults")
 
 
 class VaultController:
-
+    """Handles creation of a new vault file, loading and saving operations"""
     def __init__(self):
-        self.current_key = None
         self.open_vault: BaseVault = None
 
-    def create_vault(self, vault_name: str, vault_key: str):
-        """Create a new vault.
-        :param vault_name: Vault name
-        :param vault_key: Vault Key
-        :return:
-        """
+    def create_vault(self, vault_data: Vault):
+        """Create a new vault file"""
         print("Creating new vault...")
-        self.current_key = vault_key
-        self.open_vault = BaseVault(vault_name)
+        self.open_vault = BaseVault(vault_name=vault_data.vault_name, vault_id=vault_data.vault_id)
+        self.save_vault(vault_data)
 
-    def load_vault(self, vault_name: str, vault_key: str) -> None:
+    def load_vault(self, vault_data: Vault) -> None:
         """
         Loads a vault in memory for accessing data
-        :param vault_name: Vault name string.
-        :param vault_key: Vault password.
+        :param vault_data:
         :return: None
         """
-        print(f"Loading vault {vault_name}...")
-        with open(f"vaults/{vault_name}.vault", "rb") as vault:
-            # TODO: Implement safe filepath loading
+        print(f"Loading vault {vault_data.vault_name}...")
+        with open(f"{vault_dir}/{vault_data.vault_name}.vault", "rb") as vault:
             token = vault.readlines()
-            salt = token[0].strip(str.encode("\n"))
-            fermat = Fernet(derive_key(vault_key, salt))
-            readable = fermat.decrypt(token[1])
+            fernet = Fernet((derive_key(vault_data.vault_key, vault_data.salt)))
+            readable = fernet.decrypt(token[0])
 
             self.open_vault = BaseVault(**json.loads(readable))
 
-    def save_vault(self, vault_name: str, vault_key: str):
+    def save_vault(self, vault_data: Vault):
         """
         Encrypts and flushes the vault to disk.
-        :param vault_name: Vault name
-        :param vault_key: Vault Key
         :return:
         """
-        with open(f"vaults/{vault_name}.vault", "wb") as vault:
-            # TODO: Implement safe filepath loading
-            salt = os.urandom(16)
-            fermat = Fernet(derive_key(vault_key, salt))
-            content = json.dumps(self.open_vault.get_dict(), separators=(',',':'))
+        print(os.getcwd())
+        with open(f"{vault_dir}/{vault_data.vault_name}.vault", "wb") as vault:
+            fermat = Fernet(derive_key(vault_data.vault_key, vault_data.salt))
+            content = json.dumps(self.open_vault.get_dict(), separators=(',', ':'))
             not_readable = fermat.encrypt(str.encode(content))
-            lines = [salt+str.encode("\n"), not_readable]
+            lines = [not_readable]
             vault.writelines(lines)
 
     def get_vault(self):
@@ -64,17 +55,3 @@ class VaultController:
         """
         return self.open_vault
 
-
-vault_cont = VaultController()
-# vault_cont.load_vault("vault", "")
-vault_cont.create_vault("Hola", "pizza")
-vault_cont.get_vault().add_note({
-      "note_name": "Agua",
-      "contents": {
-        "text": "Toma mas agua gato"
-      }
-    })
-vault_cont.save_vault("Hola", "pizza")
-vault_cont.load_vault("Hola", "pizza")
-vault_cont.save_vault("Hola", "pizza")
-print(vault_cont.get_vault())
