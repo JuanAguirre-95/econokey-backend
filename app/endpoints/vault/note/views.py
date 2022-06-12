@@ -5,7 +5,7 @@ from marshmallow import ValidationError
 from app.models.note import NoteSchema
 from app.services.vault.vault_controller import vault_controller
 
-note_view = Blueprint("note_view", __name__, url_prefix="/note")
+note_view = Blueprint("note_view", __name__, url_prefix="/notes")
 
 @note_view.get("/")
 @jwt_required()
