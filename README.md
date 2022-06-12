@@ -14,7 +14,7 @@ Econokey backend
 3. Navigate to the folder where the repo was cloned
 4. Install dependencies with Poetry```poetry update && poetry install```
 5. Run the app with the following command ```python3 -m flask run```
-6. Use configure postman url collection variable to the container ip (localhost shoud work)
+6. Use configure postman url collection variable to your ip (localhost shoud work)
 7. Have fun
 
 ### Docker
