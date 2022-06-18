@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from app import config
 
 from app.endpoints.generation import gen_view
@@ -13,7 +14,8 @@ def create_app(scope: str = "dev"):
     """Econokey Backend App Factory"""
     econokey = Flask(__name__)
     econokey.config.from_object(config.get_config(scope))
-
+    CORS(econokey)
+    
     view_list = [gen_view, generators_view, vault_view, login_view]
     with econokey.app_context():
         # Register available endpoint blueprints
