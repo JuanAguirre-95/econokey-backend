@@ -1,0 +1,1 @@
+from .views import gen_view

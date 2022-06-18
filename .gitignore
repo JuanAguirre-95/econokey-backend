@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.idea
+app/database
+app/services/vault/vault_controller/vaults
