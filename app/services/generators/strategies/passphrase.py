@@ -1,6 +1,5 @@
 """Passphrase Generator Module"""
 import random
-from dataclasses import dataclass
 from typing import Any
 
 from app.services.generators import factory
@@ -61,7 +60,6 @@ class PassphraseGenerator:
             "word_count": self.word_count,
             "delimiter": self.delimiter,
             "capitalization_type": self.capitalization_type,
-
         }
 
 
