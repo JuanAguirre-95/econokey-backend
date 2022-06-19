@@ -1,16 +1,14 @@
 import os
 import uuid
 
-from bcrypt import hashpw, gensalt
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, current_user
 
-from app.models.password import PasswordSchema
+from app.endpoints.vault.note import note_view
+from app.endpoints.vault.password import password_view
+from app.endpoints.vault.wallet import wallet_view
 from app.models.vault import Vault
 from app.services.vault.vault_controller import vault_controller
-from app.endpoints.vault.password import password_view
-from app.endpoints.vault.note import note_view
-from app.endpoints.vault.wallet import wallet_view
 
 vault_view = Blueprint("vault_view", __name__, url_prefix="/vault")
 vault_view.register_blueprint(password_view)
