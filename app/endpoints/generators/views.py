@@ -1,12 +1,14 @@
 from flask import Blueprint, request, jsonify
 from app.services.generators.generator_service import GeneratorService
-from typing import get_type_hints
+import hdwallet.symbols as sym
+
 generators_view = Blueprint("generators_view", __name__, url_prefix="/generators")
 
-gen = GeneratorService([".password", ".passphrase", ".wallet_btc"])
+gen = GeneratorService([".password", ".passphrase", ".wallet"])
+
 
 @generators_view.get("/")
-def generate():
+def generator_defaults():
     """
 
     :return: JSON
@@ -25,3 +27,8 @@ def generate():
         ret.append(gen_ret)
     print(ret)
     return jsonify(ret)
+
+
+@generators_view.get("/symbols")
+def crypto_symbols():
+    return sym.__all__
