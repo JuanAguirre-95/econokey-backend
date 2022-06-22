@@ -7,11 +7,14 @@ from app.models.vault import Vault
 from app.services.vault.vault_controller.base_vault import BaseVault
 from .security import derive_key
 
-vault_dir = os.path.join(os.getcwd(), "services", "vault", "vault_controller", "vaults")
+vault_dir = os.path.join(os.getcwd(), "vaults")
+if not os.path.isdir(vault_dir):
+    os.mkdir(vault_dir)
 
 
 class VaultController:
     """Handles creation of a new vault file, loading and saving operations"""
+
     def __init__(self):
         self.open_vault: BaseVault = None
 
@@ -40,7 +43,7 @@ class VaultController:
         Encrypts and flushes the vault to disk.
         :return:
         """
-        print(os.getcwd())
+        print(vault_dir)
         with open(f"{vault_dir}/{vault_data.vault_name}.vault", "wb") as vault:
             fermat = Fernet(derive_key(vault_data.vault_key, vault_data.salt))
             content = json.dumps(self.open_vault.get_dict(), separators=(',', ':'))
@@ -54,4 +57,3 @@ class VaultController:
         :return:
         """
         return self.open_vault
-
