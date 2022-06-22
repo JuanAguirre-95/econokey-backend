@@ -1,11 +1,10 @@
 from flask import Flask
-from app import config
 
+from app import config
+from app.endpoints.auth import login_view
 from app.endpoints.generation import gen_view
 from app.endpoints.generators import generators_view
 from app.endpoints.vault import vault_view
-from app.endpoints.auth import login_view
-
 from app.modules import db, jwt, cors
 
 
@@ -32,4 +31,4 @@ def create_app(scope: str = "dev"):
     return econokey
 
 
-app = create_app()
+econokey = create_app()
