@@ -3,6 +3,7 @@ import random
 from typing import Any
 
 from app.services.generators import factory
+from app.utils.wordlist import get_wordlist
 
 
 class PassphraseGenerator:
@@ -13,9 +14,8 @@ class PassphraseGenerator:
     word_count: int = 5
     delimiter: str = "."
     capitalization_type: str = "lowercase"
-
-    word_pool = ["perro", "gato", "cabeza", "termo", "falopa"]  # TODO: Implement dinamic list of words.
-    delimiter_pool = ".,!@#$%^&*(){}:;"  # TODO: Allow custom delimiter pool.
+    word_pool: list = get_wordlist()
+    delimiter_pool: str = ".,!@#$%^&*(){}:;"
 
     def __init__(self, *args, **kwargs):
         """Instantiate the generation with the required parameters"""
