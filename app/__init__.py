@@ -1,23 +1,21 @@
 from flask import Flask
-from flask_cors import CORS
-from app import config
 
+from app import config
+from app.endpoints.auth import login_view
 from app.endpoints.generation import gen_view
 from app.endpoints.generators import generators_view
 from app.endpoints.vault import vault_view
-from app.endpoints.auth import login_view
-
-from app.modules import db, jwt
+from app.modules import db, jwt, cors
 
 
 def create_app(scope: str = "dev"):
     """Econokey Backend App Factory"""
     econokey = Flask(__name__)
     econokey.config.from_object(config.get_config(scope))
-    CORS(econokey)
-    
+    econokey.url_map.strict_slashes = False
     view_list = [gen_view, generators_view, vault_view, login_view]
     with econokey.app_context():
+        cors.init_app(econokey)
         # Register available endpoint blueprints
         for view in view_list:
             econokey.register_blueprint(view)
@@ -30,8 +28,7 @@ def create_app(scope: str = "dev"):
         # Initialize JWT manager
         jwt.init_app(econokey)
 
-
     return econokey
 
 
-app = create_app()
+econokey = create_app()

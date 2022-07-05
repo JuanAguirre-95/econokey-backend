@@ -13,8 +13,8 @@ wallet_view = Blueprint("wallet_view", __name__, url_prefix="/wallets")
 def list_wallets():
     vault_controller.load_vault(current_user)
     current_vault = vault_controller.open_vault
-    notes = current_vault.notes
-    return jsonify(notes)
+    wallets = current_vault.wallets
+    return jsonify(wallets)
 
 
 @wallet_view.get("/wallet")

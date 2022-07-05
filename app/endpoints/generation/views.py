@@ -3,7 +3,7 @@ from app.services.generators.generator_service import GeneratorService
 
 gen_view = Blueprint("gen_view", __name__, url_prefix="/generate")
 
-gen = GeneratorService([".password", ".passphrase", ".wallet_btc"])
+gen = GeneratorService([".password", ".passphrase", ".wallet"])
 
 
 def validate_json_body(body: dict):
