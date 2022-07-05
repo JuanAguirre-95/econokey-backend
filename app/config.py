@@ -8,7 +8,7 @@ class BaseConfig:
 class DevelopmentConfig(BaseConfig):
     """Development Config"""
     JWT_SECRET_KEY: str = "development"
-    SQLALCHEMY_DATABASE_URI: str = "sqlite:///database/econokey.db"
+    #SQLALCHEMY_DATABASE_URI: str = "sqlite:///database/econokey.db"
 
 
 def get_config(scope: str):
