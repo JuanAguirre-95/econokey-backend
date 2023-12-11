@@ -1,6 +1,5 @@
 # econokey-backend
-Econokey backend
-
+Econokey is a prototype for a password vault and generator, that differentiates from others by having the capabilities for cryptocurrency cold wallet generation. 
 ## Instalation
 
 1. Install Python >3.10 https://www.python.org/downloads/
